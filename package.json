@@ -1,0 +1,39 @@
+{
+    "name": "tips-notifications-api",
+    "description": "",
+    "version": "1.0.0",
+    "author": "amalbogast <albogast.aman@gmail.com>",
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/albogast.aman@gmail.com/tips-notifications-api.git"
+    },
+    "bugs": "http://github.com/albogast.aman@gmail.com/tips-notifications-api/issues",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+        "boom": "^7.1.1",
+        "dotenv": "^8.1.0",
+        "hapi": "^17.0.0",
+        "hapi-openapi": "^1.0.0",
+        "nodemailer": "^6.3.0"
+    },
+    "devDependencies": {
+        "eslint": "^2",
+        "tape": "^4",
+        "istanbul": "~0.4.3",
+        "swagmock": "~0.0.2"
+    },
+    "scripts": {
+        "start": "node src/server.js",
+        "test": "tape 'tests/**/*.js'",
+        "cover": "istanbul cover tape -- 'tests/**/*.js'",
+        "lint": "eslint .",
+        "regenerate": "yo swaggerize:test --framework hapi --apiPath './config/swagger.json'"
+    },
+    "generator-swaggerize": {
+        "version": "4.1.0"
+    },
+    "main": "./server"
+}

@@ -1,0 +1,682 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "TIPS Reports API for TIPS Transfers Business Reports Data",
+        "version": "1.0",
+        "title": "Notifications API",
+        "license": {
+            "name": "Notification API for TIPS Operations"
+        }
+    },
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/send": {
+            "post": {
+                "tags": [
+                    "mails"
+                ],
+                "summary": "Send mails",
+                "description": "The HTTP request POST /send is used to send mails TIPS users.",
+                "operationId": "MailPost",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "accept",
+                        "in": "header",
+                        "description": "The Accept header field indicates the version of the API the client would like the server to use.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "content-type",
+                        "in": "header",
+                        "description": "The Content-Type header indicates the specific version of the API used to send the payload body.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Email object that needs to be sent",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/MailsList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - The request requires authentication in order to be processed.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The request was denied and will be denied in the future.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The resource specified in the URI was not found.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed - An unsupported HTTP method for the request was used.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "406": {
+                        "description": "Not acceptable - The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented - The server does not support the requested service. The client should not retry.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable - The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Check API status",
+                "description": "The HTTP request GET /health is used to return the current status of the Notifications API.",
+                "operationId": "ReportsHealthGet",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - The request requires authentication in order to be processed.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The request was denied and will be denied in the future.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The resource specified in the URI was not found.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed - An unsupported HTTP method for the request was used.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "406": {
+                        "description": "Not acceptable - The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented - The server does not support the requested service. The client should not retry.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable - The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.",
+                        "headers": {
+                            "Content-Length": {
+                                "type": "integer",
+                                "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                            },
+                            "Content-Type": {
+                                "type": "string",
+                                "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInformationResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ErrorCode": {
+            "type": "string",
+            "title": "ErrorCode",
+            "pattern": "^[1-9]\\d{3}$",
+            "description": "The API data type ErrorCode is a JSON String of four characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Each error code in the API is a four-digit number, for example, 1234, where the first number (1 in the example) represents the high-level error category, the second number (2 in the example) represents the low-level error category, and the last two numbers (34 in the example) represents the specific error."
+        },
+        "ErrorDescription": {
+            "type": "string",
+            "title": "ErrorDescription",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Error description string."
+        },
+        "ExtensionKey": {
+            "type": "string",
+            "title": "ExtensionKey",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "Extension key."
+        },
+        "ExtensionValue": {
+            "type": "string",
+            "title": "ExtensionValue",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Extension value."
+        },
+        "ErrorInformation": {
+            "type": "object",
+            "required": [
+                "errorCode",
+                "errorDescription"
+            ],
+            "properties": {
+                "errorCode": {
+                    "type": "string",
+                    "description": "Specific error number."
+                },
+                "errorDescription": {
+                    "type": "string",
+                    "description": "Error description string."
+                },
+                "extensionList": {
+                    "$ref": "#/definitions/ExtensionList"
+                }
+            },
+            "title": "ErrorInformation",
+            "description": "Data model for the complex type ErrorInformation."
+        },
+        "ErrorInformationResponse": {
+            "type": "object",
+            "properties": {
+                "errorInformation": {
+                    "$ref": "#/definitions/ErrorInformation"
+                }
+            },
+            "title": "ErrorInformationResponse",
+            "description": "Data model for the complex type object that contains an optional element ErrorInformation used along with 4xx and 5xx responses."
+        },
+        "Extension": {
+            "type": "object",
+            "required": [
+                "key",
+                "value"
+            ],
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "Extension key."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Extension value."
+                }
+            },
+            "title": "Extension",
+            "description": "Data model for the complex type Extension"
+        },
+        "ExtensionList": {
+            "type": "object",
+            "required": [
+                "extension"
+            ],
+            "properties": {
+                "extension": {
+                    "type": "array",
+                    "description": "Number of Extension elements",
+                    "items": {
+                        "$ref": "#/definitions/Extension"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1
+                }
+            },
+            "title": "ExtensionList",
+            "description": "Data model for the complex type ExtensionList"
+        },
+        "MailsList": {
+            "type": "array",
+            "description": "List of emails to send as notifications",
+            "items": {
+                "$ref": "#/definitions/Email"
+            }
+        },
+        "Email": {
+            "type": "object",
+            "properties": {
+                "receiver": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "receiver",
+                "sender",
+                "subject",
+                "body"
+            ]
+        },
+        "Status": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "The return status, usually \"OK\""
+                }
+            },
+            "title": "Status",
+            "description": "Data model for the api status."
+        }
+    },
+    "parameters": {
+        "Accept": {
+            "name": "accept",
+            "in": "header",
+            "description": "The Accept header field indicates the version of the API the client would like the server to use.",
+            "required": true,
+            "type": "string"
+        },
+        "Accept-Optional": {
+            "name": "accept",
+            "in": "header",
+            "description": "The Accept header field indicates the version of the API the client would like the server to use.",
+            "required": false,
+            "type": "string"
+        },
+        "Content-Length": {
+            "name": "content-length",
+            "in": "header",
+            "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body. Note - The API supports a maximum size of 5242880 bytes (5 Megabytes)",
+            "required": false,
+            "type": "integer"
+        },
+        "Content-Type": {
+            "name": "content-type",
+            "in": "header",
+            "description": "The Content-Type header indicates the specific version of the API used to send the payload body.",
+            "required": true,
+            "type": "string"
+        }
+    },
+    "responses": {
+        "ResponseHealth200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/Status"
+            }
+        },
+        "Response200": {
+            "description": "OK",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/MailsList"
+            }
+        },
+        "Response201": {
+            "description": "Created"
+        },
+        "Response204": {
+            "description": "No Content"
+        },
+        "ErrorResponse400": {
+            "description": "Bad Request - The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse401": {
+            "description": "Unauthorized - The request requires authentication in order to be processed.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse403": {
+            "description": "Forbidden - The request was denied and will be denied in the future.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse404": {
+            "description": "Not Found - The resource specified in the URI was not found.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse405": {
+            "description": "Method Not Allowed - An unsupported HTTP method for the request was used.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse406": {
+            "description": "Not acceptable - The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse501": {
+            "description": "Not Implemented - The server does not support the requested service. The client should not retry.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        },
+        "ErrorResponse503": {
+            "description": "Service Unavailable - The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.",
+            "headers": {
+                "Content-Length": {
+                    "type": "integer",
+                    "description": "The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body."
+                },
+                "Content-Type": {
+                    "type": "string",
+                    "description": "The Content-Type header indicates the specific version of the API used to send the payload body."
+                }
+            },
+            "schema": {
+                "$ref": "#/definitions/ErrorInformationResponse"
+            }
+        }
+    }
+}
