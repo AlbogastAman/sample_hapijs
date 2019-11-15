@@ -18,19 +18,34 @@ require('dotenv').config();
 //     rejectUnauthorized: process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0
 // });
 
-
 const init = async () => {
     const server = new Hapi.Server({
         port: 3006,
         host: 'localhost',
-         // If your cookie format is not RFC 6265, set this param to false.
+        // If your cookie format is not RFC 6265, set this param to false.
         state: {
-              strictHeader: false    
-            },
+            strictHeader: false
+        },
         routes: {
             cors: {
                 origin: ['*'],
                 additionalHeaders: ['x-token-token', 'token', 'authorization', 'transfer-status', 'transaction-type', 'from-date', 'to-date']
+            },
+            validate: {
+                failAction: async (request, h, err) => {
+
+                    console.log('payload ',request.payload)
+
+                    if (process.env.NODE_ENV === 'production') {
+                        // In prod, log a limited error message and throw the default Bad Request error.
+                        console.error('ValidationError:', err.message);
+                        throw Boom.badRequest(`Invalid request payload input`);
+                    } else {
+                        // During development, log and respond with the full error.
+                        console.error(err);
+                        throw err;
+                    }
+                }
             }
         }
 
@@ -97,7 +112,7 @@ process.on('unhandledRejection', (err) => {
 
 init().then((server) => {
     server.plugins.openapi.setHost(server.info.host + ':' + server.info.port);
-   // server.ext('onRequest', onRequest);
+    // server.ext('onRequest', onRequest);
     server.log(['info'], `Server running on ${server.info.host}:${server.info.port}`);
     console.log(`Server running on ${server.info.host}:${server.info.port}`);
 });
