@@ -1,6 +1,13 @@
 'use strict';
 const nodemailer = require('nodemailer');
 
+module.exports.stripquotes = (txt) => {
+    if ((txt.charAt(0) === '"' || txt.charAt(0) === "'") && (txt.charAt(txt.length - 1) === '"' || txt.charAt(txt.length - 1) === "'")) {
+        return txt.substr(1, txt.length - 2);
+    }
+    return txt;
+}
+
 // async..await is not allowed in global scope, must use a wrapper
 module.exports.send = async (email) => {
 
@@ -33,19 +40,21 @@ module.exports.send = async (email) => {
 
     const mailOptions = {
         from: email.sender,
-        to: email.receiver,
+        to: this.stripquotes(email.receiver),
         subject: email.subject,
         html: email.body
     }
+
+    // console.log('mailOptions ', mailOptions);
 
     try {
 
         let info = await transporter.sendMail(mailOptions);
 
-        console.log('Infor ', info);
-        console.log('Message sent: %s', info.messageId);
+        // console.log('Infor ', info);
+        // console.log('Message sent: %s', info.messageId);
         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
         mailResponse = {
             emailSent: true,
@@ -53,11 +62,11 @@ module.exports.send = async (email) => {
         };
 
     } catch (err) {
-        console.log(err.message);
+        //console.log(err.message);
         //throw err; 
         mailResponse = {
             emailSent: false,
-            messageId: ''
+            messageId: err.message
         };
     }
 
