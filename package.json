@@ -21,14 +21,17 @@
     },
     "devDependencies": {
         "eslint": "^2",
-        "tape": "^4",
+        "jest": "^26.4.2",
         "istanbul": "~0.4.3",
         "swagmock": "~0.0.2"
     },
+    "jest": {
+        "verbose": true
+    },
     "scripts": {
         "start": "node src/server.js",
-        "test": "tape 'tests/**/*.js'",
-        "cover": "istanbul cover tape -- 'tests/**/*.js'",
+        "test": "jest --watch",
+        "coverage": "npm run test --coverage",
         "lint": "eslint .",
         "regenerate": "yo swaggerize:test --framework hapi --apiPath './config/swagger.json'"
     },

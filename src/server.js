@@ -3,9 +3,6 @@
 const Hapi = require('hapi');
 const HapiOpenAPI = require('hapi-openapi');
 const Path = require('path');
-// const fetch = require('node-fetch');
-// const https = require('https');
-// const config = require('./lib/config');
 
 require('dotenv').config();
 
@@ -64,46 +61,6 @@ const init = async () => {
     return server;
 };
 
-
-// const onRequest = async (request, h, error) => {
-
-//     const uri = request.raw.req.url;
-//     if (uri === '/health' && request.method.toLowerCase() === 'get') {
-//         // continue request without authentication
-//         return await h.continue
-//     }
-
-//     if (config.auth.bypass) {
-//         return await h.continue;
-//     }
-
-//     const requestHeaders = request.headers;
-//     const authorization = requestHeaders.authorization;
-//     const opts = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//             'Authorization': authorization
-//         },
-//         body: `token=${requestHeaders.token}`,
-//         agent: selfSignedAgent
-//     };
-
-//     const validToken = await fetch(config.auth.validateEndpoint, opts).then(res => res.json());
-//     console.log("*******valid token", validToken);
-//     let isValid = validToken['active'];
-
-//     if (!isValid) {
-//         return h
-//             .response({
-//                 active: false
-//             })
-//             .code(401)
-//             .takeover()
-//     }
-//     return await h.continue;
-
-// };
 
 process.on('unhandledRejection', (err) => {
     console.log(err);

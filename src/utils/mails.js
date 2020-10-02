@@ -23,21 +23,6 @@ module.exports.send = async (email) => {
         }
     });
 
-    // let transporter = nodemailer.createTransport({
-    //     host: 'owa.bot.go.tz',
-    //     port: 25,
-    //     secure: false, // true for 465, false for other ports
-    //     auth: {
-    //         user: "noreply@bot.go.tz",
-    //         pass: "BOTmaster123"
-    //     },
-    //     tls: {
-    //       // do not fail on invalid certs
-    //       rejectUnauthorized: false
-    //     }
-    // });
-
-
     const mailOptions = {
         from: email.sender,
         to: this.stripquotes(email.receiver),
@@ -51,19 +36,12 @@ module.exports.send = async (email) => {
 
         let info = await transporter.sendMail(mailOptions);
 
-        // console.log('Infor ', info);
-        // console.log('Message sent: %s', info.messageId);
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
         mailResponse = {
             emailSent: true,
             messageId: info.messageId
         };
 
     } catch (err) {
-        //console.log(err.message);
-        //throw err; 
         mailResponse = {
             emailSent: false,
             messageId: err.message
@@ -73,21 +51,3 @@ module.exports.send = async (email) => {
     return mailResponse;
 }
 
-
-exports.send2 = async (template, user, subject, data) => {
-
-    const { html, text } = await prepareTemplate(template, data)
-    const mailOptions = {
-        from: `Marcus Poehls <marcus@futurestud.io>`,
-        to: user.email,
-        subject: subject,
-        html,
-        text
-    }
-
-    try {
-        await Transporter.sendMail(mailOptions)
-    } catch (err) {
-        console.log(err)
-    }
-}
